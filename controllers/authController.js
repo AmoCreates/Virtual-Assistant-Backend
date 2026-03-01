@@ -14,6 +14,8 @@ const signupUser = async (req, res) => {
     
     if (error) {
         return res.status(400).json({ message: error.message });
+        //comment comment comment comment
+        hello there
     }
 
     try {
