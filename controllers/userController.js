@@ -19,25 +19,29 @@ export const getCurrentUser = async (req, res) => {
 }
 
 export const updateAssistant = async (req, res) => {
-    try {
-        const { assistantName, assistantImg } = req.body; 
-        let finalImgUrl = assistantImg; 
+  try {
+    const { assistantName, imageUrl } = req.body;
+    let finalImgUrl;
 
-        if (req.file) {
-            // This utility calls cloudinary.uploader.upload(req.file.path)
-            const cloudinaryUrl = await cloudinaryUpload(req.file.path);
-            finalImgUrl = cloudinaryUrl;
-        }
-
-        const user = await userModel.findByIdAndUpdate(
-            req.userId, 
-            { assistantName, assistantImg: finalImgUrl }, 
-            { new: true }
-        ).select('-password');
-
-        // This is what the frontend will receive
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(400).json({ message: 'Upload failed' });
+    if (req.file) {
+      finalImgUrl = await cloudinaryUpload(req.file.path);
+    } else {
+      finalImgUrl = imageUrl;
     }
+
+    const user = await userModel.findByIdAndUpdate(
+      req.userId,
+      {
+        assistantName,
+        assistantImg: finalImgUrl
+      },
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json(user);
+
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Upload failed" });
+  }
 };
