@@ -45,3 +45,27 @@ export const updateAssistant = async (req, res) => {
     res.status(400).json({ message: "Upload failed" });
   }
 };
+
+export const askAssistant = async (req, res) => {
+    try {
+        const { command } = req.body;
+        const user = await userModel.findById(req.userId);
+        if (!user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
+        let userName = user.name;
+        let assistantName = user.assistantName || "Sia";
+        let response = await geminiResponse(command, assistantName, userName);
+
+        const jsonMatch = response.match(/{[\s\S]*}/);
+        if (!jsonMatch) {
+            return res.status(400).json({ message: "Sorry, I couldn't understand that." });
+        } else {
+            return res.status(200).json(JSON.parse(jsonMatch[0]));
+        }
+
+    } catch (error) {
+        console.error("Error asking Gemini:", error);
+        res.status(500).json({ message: "Error asking Gemini" });
+    }
+}
