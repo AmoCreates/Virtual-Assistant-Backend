@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
 
     assistantImg: String,
 
+    voicePreference: String,
+
     chatHistory: [
         {
             type:String
