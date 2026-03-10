@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin: 'https://virtual-assistant-kappa-two.vercel.app',
+    origin: 'https://virtual-assistant-nu-pink.vercel.app',
     credentials: true,
     methods: ["GET", "POST"]
 }));
