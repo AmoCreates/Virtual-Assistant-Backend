@@ -19,12 +19,12 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors({
     origin: 'https://virtual-assistant-eosin.vercel.app',
     credentials: true,
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
 
-app.use('/v1/auth', authRouter);
-app.use('/v1/user', userRouter);
+app.use('api/v1/auth', authRouter);
+app.use('api/v1/user', userRouter);
 
 app.get('/', async (req, res) => {
     let prompt = req.query.prompt || "What is the capital of France?";
