@@ -36,7 +36,7 @@ const signupUser = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             maxAge: 1000 * 3600 * 24 * 7,
-            sameSite: none,
+            sameSite: 'none',
             secure: true // set to true in production
         });
 
@@ -71,7 +71,7 @@ const signinUser = async (req, res) => {
             res.cookie('token', token, {
                 httpOnly: true,
                 maxAge: 1000*3600*24*7,
-                sameSite: none,
+                sameSite: 'none',
                 secure: true
             });
             res.status(202).json({message: "user successfully logged in"});
