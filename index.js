@@ -26,6 +26,11 @@ app.use(cors({
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 
+// Lightweight endpoint to keep Render instance awake
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.get('/', async (req, res) => {
     let prompt = req.query.prompt || "What is the capital of France?";
     let data = await geminiResponse(prompt, "sia", "anmol");
