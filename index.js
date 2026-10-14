@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({
-    origin: 'https://virtual-assistant-eosin.vercel.app',
+    origin: process.env.Frontend_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
